@@ -1,0 +1,12 @@
+﻿  LinkedList.cpp
+c:\users\di9ak\documents\visual studio 2017\projects\linkedlist\linkedlist\linkedlist.cpp(249): warning C4661: 'void LinkedList<int>::toLower(std::string)': no suitable definition provided for explicit template instantiation request
+  c:\users\di9ak\documents\visual studio 2017\projects\linkedlist\linkedlist\linkedlist.h(59): note: see declaration of 'LinkedList<int>::toLower'
+c:\users\di9ak\documents\visual studio 2017\projects\linkedlist\linkedlist\linkedlist.cpp(42): warning C4661: 'void LinkedList<int>::toLower(std::string)': no suitable definition provided for explicit template instantiation request
+  c:\users\di9ak\documents\visual studio 2017\projects\linkedlist\linkedlist\linkedlist.h(59): note: see declaration of 'LinkedList<int>::toLower'
+  main.cpp
+  Generating code
+  7 of 312 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    22 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  LinkedList.vcxproj -> C:\Users\di9ak\Documents\Visual Studio 2017\Projects\LinkedList\Release\LinkedList.exe
