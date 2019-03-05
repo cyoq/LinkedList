@@ -1,0 +1,18 @@
+﻿Build started 25.02.2019 18:01:20.
+     1>Project "D:\student\SchoolC\armey\LinkedList\LinkedList\LinkedList.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"pch.h" /Fp"x64\Debug\LinkedList.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt LinkedList.cpp main.cpp node.cpp
+         node.cpp
+     1>d:\student\schoolc\armey\linkedlist\linkedlist\node.cpp(57): error C2039: 'pushAt': is not a member of 'node<T>'
+         LinkedList.cpp
+     1>d:\student\schoolc\armey\linkedlist\linkedlist\linkedlist.cpp(147): error C2039: 'sort': is not a member of 'LinkedList<std::string>'
+     1>d:\student\schoolc\armey\linkedlist\linkedlist\linkedlist.cpp(149): error C2912: explicit specialization 'void sort(void)' is not a specialization of a function template
+         Generating Code...
+         Compiling...
+         main.cpp
+         Generating Code...
+     1>Done Building Project "D:\student\SchoolC\armey\LinkedList\LinkedList\LinkedList.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.85

@@ -1,0 +1,7 @@
+﻿  LinkedList.cpp
+c:\users\di9ak\documents\visual studio 2017\projects\linkedlist\linkedlist\linkedlist.cpp(293): warning C4661: 'void LinkedList<int>::toLower(std::string &)': no suitable definition provided for explicit template instantiation request
+  c:\users\di9ak\documents\visual studio 2017\projects\linkedlist\linkedlist\linkedlist.h(59): note: see declaration of 'LinkedList<int>::toLower'
+c:\users\di9ak\documents\visual studio 2017\projects\linkedlist\linkedlist\linkedlist.cpp(39): warning C4661: 'void LinkedList<int>::toLower(std::string &)': no suitable definition provided for explicit template instantiation request
+  c:\users\di9ak\documents\visual studio 2017\projects\linkedlist\linkedlist\linkedlist.h(59): note: see declaration of 'LinkedList<int>::toLower'
+  LinkedList.vcxproj -> C:\Users\di9ak\Documents\Visual Studio 2017\Projects\LinkedList\Debug\LinkedList.exe
+  LinkedList.vcxproj -> C:\Users\di9ak\Documents\Visual Studio 2017\Projects\LinkedList\Debug\LinkedList.pdb (Full PDB)
