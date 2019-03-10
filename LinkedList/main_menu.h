@@ -59,6 +59,12 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 			CHECK_LOAD();
 			arr->show();
 		}
+		else if (values[0] == "clear") {
+			CHECK_LOAD();
+			std::cout << "Clearing the list!" << std::endl;
+			arr->clear();
+			loaded = false;
+		}
 		else if (values[0] == "sort") {
 			CHECK_LOAD();
 			clock_t start = clock();

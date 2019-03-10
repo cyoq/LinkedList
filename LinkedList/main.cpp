@@ -42,7 +42,6 @@ int main() {
 	arr->show();*/
 
 
-
 	mainMenu(arr);
 
 	std::cout << "Goodbye!" << std::endl;

@@ -35,8 +35,8 @@ public:
 	LinkedList<T>(const LinkedList<T> &obj);
 	~LinkedList<T>();
 	void show();
-	void swap(node<T> * &a, node<T> * &b);
 	void sort();
+	void clear();
 	bool search(const T &data);
 	const int getSize();
 	const bool isSorted();
@@ -52,12 +52,13 @@ public:
 	void removeFront();
 	void removeBack();
 	bool removeAt(int pos);
-	node<T> *head;
 
 private:
+	node<T> *head;
 	node<T> *tail;
 	int _size;
 	bool _isSorted;
 	void toLower(std::string &data);
+	void swap(node<T> * &a, node<T> * &b);
 };
 

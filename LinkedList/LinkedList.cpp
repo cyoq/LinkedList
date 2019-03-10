@@ -64,72 +64,102 @@ void LinkedList<T>::show() {
 }
 
 template<typename T>
+void LinkedList<T>::clear() {
+	if (this->head == NULL || this->head->next == NULL) { return; }
+	node<T> *cursor = this->head->next;
+	while (cursor != NULL) {
+		node<T> *temp = cursor->next;
+		delete cursor;
+		cursor = temp;
+	}
+	this->head = NULL;
+	_size = 0;
+}
+
+template<typename T>
 void LinkedList<T>::swap(node<T> * &a, node<T> * &b) {
 
-	/*if (a == NULL) { return; }
-	if (b == NULL) { return; }
-	if (a->next == NULL) { return; }
-	if (b->next == NULL) { return; }
-
-	node<T> *firstPrev = NULL;
-	node<T> *secondPrev = NULL;
-	node<T> *current = this->head;
-
-	if (a == this->head) {
-
-		while (current->next != b) {
-			current = current->next;
-		}
-
-		secondPrev = current;
-		current = b;
-
-		b->next = this->head->next;
-		b = this->head;
-
-		secondPrev->next = this->head;
-		this->head->next = current->next;
-
-	}
-	else {
-		while (current->next != a) {
-			current = current->next;
-		}
-
-		firstPrev = current;
-		current = this->head;
-
-		while (current->next != b) {
-			current = current->next;
-		}
-
-		secondPrev = current;
-		current = a->next;
-
-		firstPrev->next = b;
-		secondPrev->next = a;
-
-		a->next = b->next;
-		b->next = current;
-	}
-*/
 	T temp = a->data;
 	a->data = b->data;
 	b->data = temp;
-}
 
+	//node<T> *prev = this->head;
+
+	//if (a == this->head) { 
+	//	node<T> *tempB = b;
+	//	a->next = NULL; //a->next = null - destroy the chain between paired links
+	//	a->next = tempB->next; //a->next = c
+	//	tempB->next = a; //b->next = a
+	//	this->head = tempB;
+	//}
+	//else {
+	//	while (prev) {
+	//		if (prev->next == a) { break; }
+	//		prev = prev->next;
+	//	}
+	//	
+	//	node<T> *temp = b->next;
+	//	prev->next = b;
+	//	b->next = a;
+	//	a->next = temp;
+
+	//	/*node<T> *tempB = b;
+	//	a->next = NULL;
+	//	a->next = tempB->next;
+	//	tempB->next = a;
+	//	curr = tempB;*/
+	//
+	//}
+
+	
+}
 
 template<typename T>
 void LinkedList<T>::sort() {
 
-	for (node<T> *it = this->head; it; it = it->next) {
-		for (node<T> *itj = this->head; itj; itj = itj->next) {
-			if (itj->next == NULL) { break; }
+	for (node<T> *it = this->head; it->next; it = it->next) {
+		for (node<T> *itj = this->head; itj->next; itj = itj->next) {
 			if (itj->data > itj->next->data) {
 				this->swap(itj, itj->next);
 			}
 		}
 	}
+
+	_isSorted = true;
+}
+
+
+template<>
+void LinkedList<std::string>::sort() {
+
+	/*for (node<std::string> *it = this->head; it->next; it = it->next) {
+		for (node<std::string> *itj = this->head; itj->next; itj = itj->next) {
+			if (strcmp(itj->data.c_str(), itj->next->data.c_str()) > 0) {
+				this->swap(itj, itj->next);
+			}
+		}
+	}*/
+	
+	node<std::string> *prev = NULL;
+
+	bool swapped = true;
+	while (swapped) {
+
+		swapped = false;
+		node <std::string> *inner = this->head;
+
+		while (inner != NULL) {
+
+			if (inner->next == NULL) { break; }
+			if (strcmp(inner->data.c_str(), inner->next->data.c_str()) > 0) {
+				this->swap(inner, inner->next);
+				swapped = true;
+			}
+
+			inner = inner->next;
+		}
+	}
+	
 
 	_isSorted = true;
 }
@@ -194,6 +224,7 @@ bool LinkedList<std::string>::loadFromFile(std::ifstream & file) {
 	return true;
 }
 
+
 template<typename T>
 bool LinkedList<T>::loadFromFile(std::ifstream & file) {
 	if (!file.good()) { return false; }
@@ -201,6 +232,21 @@ bool LinkedList<T>::loadFromFile(std::ifstream & file) {
 		T data;
 		while (file >> data) {
 			this->pushBackUnique(data);
+		}
+	}
+	file.close();
+	_isSorted = false;
+	return true;
+}
+
+template<>
+bool LinkedList<std::string>::loadFromFileRaw(std::ifstream & file) {
+	if (!file.good()) { return false; }
+	if (file.is_open()) {
+		std::string data;
+		while (file >> data) {
+			this->toLower(data);
+			this->pushBack(data);
 		}
 	}
 	file.close();

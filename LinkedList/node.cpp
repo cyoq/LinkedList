@@ -23,8 +23,21 @@ node<T>::node(T data, node<T> *next) {
 template<typename T>
 void node<T>::pushSorted(node<T>*& head, const T & data, int &size) {
 	if (head == NULL) { this->pushFront(head, data); size++; }
-	if (head->data == data) { return; }
+	if (data == head->data) { return; }
 	else if (data > head->data) {
+		this->pushSorted(head->next, data, size);
+	}
+	else {
+		this->pushFront(head, data);
+		size++;
+	}
+}
+
+template<>
+void node<std::string>::pushSorted(node<std::string>*& head, const std::string & data, int &size) {
+	if (head == NULL) { this->pushFront(head, data); size++; }
+	if (strcmp(data.c_str(), head->data.c_str()) == 0) { return; }
+	else if (strcmp(data.c_str(), head->data.c_str()) > 0) {
 		this->pushSorted(head->next, data, size);
 	}
 	else {
