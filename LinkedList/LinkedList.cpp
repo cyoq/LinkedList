@@ -10,23 +10,6 @@ LinkedList<T>::LinkedList() {
 	_isSorted = false;
 }
 
-template<typename T>
-LinkedList<T>::LinkedList(T *data, int n) {
-	_size = 0;
-	_isSorted = false;
-	if (this->head == NULL) {
-		this->head = new node<T>();
-	}
-	node<T> *temp = this->head;
-	for (int i = 0; i < n; i++) {
-		temp->data = data[i];
-		if (i < n - 1) {
-			temp->next = new node<T>();
-			temp = temp->next;
-			_size++;
-		}
-	}
-}
 
 template<typename T>
 LinkedList<T>::LinkedList(std::ifstream &file) {
@@ -178,6 +161,69 @@ bool LinkedList<T>::search(const T & data) {
 		temp = temp->next;
 	}
 	return false;
+}
+
+template<typename T>
+int LinkedList<T>::levDistance(const std::string & s1, const std::string & s2) {
+	
+	int wl1 = strlen(s1.c_str());
+	int wl2 = strlen(s2.c_str());
+
+	if (wl1 == 0) { return 0; }
+	if (wl2 == 0) { return 0; }
+
+	const int len1 = wl1 > wl2 ? wl2 : wl1;
+	const int len2 = wl1 > wl2 ? wl1 : wl2;
+
+	int **matrix = new int*[(len1 + 1)];
+	for (int i = 0; i <= (len1 + 1); i++) {
+		matrix[i] = new int[(len2 + 1)];
+	}
+	
+	matrix[0][0] = 0;
+
+	for (int i = 1; i <= len1; i++) { matrix[i][0] = i; }
+	for (int j = 1; j <= len2; j++) { matrix[0][j] = j; }
+
+	
+	for (int i = 1; i <= len1; i++) {
+		for (int j = 1; j <= len2; j++) {
+			matrix[i][j] = std::min({
+				matrix[i - 1][j] + 1,
+				matrix[i][j - 1] + 1,
+				matrix[i - 1][j - 1] + (s1[i - 1] == s2[j - 1] ? 0 : 1),
+			});
+		}
+	}
+
+
+
+	return matrix[len1][len2];
+
+	for (int i = 0; i <= len1; i++) { delete[] matrix[i]; }
+	delete [] matrix;
+}
+
+template<typename T>
+T LinkedList<T>::findNearestWord(const T & data) { return data; }
+
+template<>
+std::string LinkedList<std::string>::findNearestWord(const std::string & data) {
+	
+	std::string result;
+	node<std::string> *temp = this->head;
+	while (temp->next != NULL) {
+		int distance = levDistance(data, temp->data);
+		if (distance <= 5 && temp->data != "") {
+			result = temp->data;
+		}
+		else {
+			result = "";
+		}
+		temp = temp->next;
+	}
+
+	return result;
 }
 
 template<typename T>

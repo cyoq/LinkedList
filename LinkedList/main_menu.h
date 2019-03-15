@@ -134,6 +134,12 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 			arr->pushSorted(values[1]);
 			std::cout << "Value has been pushed succesfully!" << std::endl;
 		}
+		else if (values[0] == "fix") {
+			CHECK_LOAD();
+			
+			std::cout << "Did you mean: " << arr->findNearestWord(values[1]) << std::endl;
+			
+		}
 		else if (values[0] == "find" || values[0] == "search") {
 			CHECK_LOAD();
 			if (arr->search(values[1])) {

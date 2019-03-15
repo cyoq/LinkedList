@@ -40,6 +40,9 @@ int main() {
 	std::cout << std::endl;
 
 	arr->show();*/
+	
+
+	//std::cout << arr->levDistance("rosettacode", "raisethysword") << std::endl;
 
 
 	mainMenu(arr);

@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <vector>
 
 
 template <typename T>
@@ -30,7 +31,6 @@ class LinkedList {
 
 public:
 	LinkedList<T>();
-	LinkedList<T>(T *data, int n);
 	LinkedList<T>(std::ifstream &file);
 	LinkedList<T>(const LinkedList<T> &obj);
 	~LinkedList<T>();
@@ -38,6 +38,8 @@ public:
 	void sort();
 	void clear();
 	bool search(const T &data);
+	int levDistance(const std::string &s1, const std::string &s2);
+	T findNearestWord(const T &data);
 	const int getSize();
 	const bool isSorted();
 	bool saveToFile(std::ofstream &file);
