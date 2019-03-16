@@ -2,3 +2,7 @@ ipch/*
 Debug/*
 Release/*
 x64/*
+LinkedList/Debug/*
+LinkedList/Release/*
+LinkedList/x64/*
+LinkedList/ipch/*
