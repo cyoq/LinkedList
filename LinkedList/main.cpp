@@ -42,7 +42,7 @@ int main() {
 	arr->show();*/
 	
 
-	//std::cout << arr->levDistance("rosettacode", "raisethysword") << std::endl;
+	//std::cout << arr->levDistance("uou", "a") << std::endl;
 
 
 	mainMenu(arr);

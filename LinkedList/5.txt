@@ -1,5 +1,5 @@
-e
-d
-c
-b
-a
+cat
+hotdog
+for
+daddy
+you
