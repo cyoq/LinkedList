@@ -193,10 +193,12 @@ int LinkedList<T>::levDistance(const std::string & s1, const std::string & s2) {
 		}
 	}
 
-	return matrix[len1][len2];
+	int result = matrix[len1][len2];
 
 	for (int i = 0; i <= len1; i++) { delete[] matrix[i]; }
-	delete [] matrix;
+	delete[] matrix;
+
+	return result;
 }
 
 template<typename T>
@@ -206,12 +208,13 @@ template<>
 std::string LinkedList<std::string>::findNearestWord(const std::string & data) {
 	
 	std::string result;
+	int minDistance = -1;
 	node<std::string> *temp = this->head;
-	while (temp->next != NULL) {
+	while (temp != NULL) {
 		int distance = levDistance(data, temp->data);
-		if (distance <= 2 && temp->data != "") {
+		if (distance < minDistance || minDistance == -1) {
+			minDistance = distance;
 			result = temp->data;
-			break;
 		}
 		temp = temp->next;
 	}

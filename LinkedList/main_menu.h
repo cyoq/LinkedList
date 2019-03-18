@@ -136,8 +136,12 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 		}
 		else if (values[0] == "fix") {
 			CHECK_LOAD();
-			
-			std::cout << "Did you mean: " << arr->findNearestWord(values[1]) << std::endl;
+			clock_t start = clock();
+			std::string result = arr->findNearestWord(values[1]);
+			clock_t end = clock();
+			std::cout << "Did you mean: " << result << std::endl;
+			std::cout << "Corrected word has succesfully been found in " <<
+				(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
 			
 		}
 		else if (values[0] == "find" || values[0] == "search") {

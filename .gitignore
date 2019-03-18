@@ -6,3 +6,4 @@ LinkedList/Debug/*
 LinkedList/Release/*
 LinkedList/x64/*
 LinkedList/ipch/*
+.vs/*
