@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <algorithm>
 #include <vector>
@@ -46,6 +47,7 @@ public:
 	bool loadFromFile(std::ifstream &file);
 	bool loadFromFileRaw(std::ifstream &file);
 	bool loadFromFileSorted(std::ifstream &file);
+	void fixWordsInFile(std::ifstream &file);
 	void pushBackUnique(const T &data);
 	void pushFront(const T &data);
 	void pushBack(const T &data);
@@ -62,5 +64,6 @@ private:
 	bool _isSorted;
 	void toLower(std::string &data);
 	void swap(node<T> * &a, node<T> * &b);
+	bool containsNumber(const std::string &data);
 };
 

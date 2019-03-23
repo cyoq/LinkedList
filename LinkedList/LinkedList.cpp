@@ -97,6 +97,11 @@ void LinkedList<T>::swap(node<T> * &a, node<T> * &b) {
 	
 }
 
+template<>
+bool LinkedList<std::string>::containsNumber(const std::string &data) {
+	return (data.find_first_of("0123456789") != std::string::npos);
+}
+
 template<typename T>
 void LinkedList<T>::sort() {
 
@@ -337,6 +342,41 @@ bool LinkedList<T>::loadFromFileSorted(std::ifstream & file) {
 	file.close();
 	_isSorted = true;
 	return true;
+}
+
+template<>
+void LinkedList<std::string>::fixWordsInFile(std::ifstream &file) {
+
+	if (!file.good()) { std::cout << "cannot open file!" << std::endl; }
+
+	std::ofstream out("fixed.txt");
+
+	if (file.is_open()) {
+		std::string data;
+		char c;
+		while (!file.eof())
+		{
+			file.get(c);
+			if (c == '\t' || c == '\n' || c == ' ' || file.eof()) {
+				if (data != "") {
+					if (this->containsNumber(data)) { out << data; }
+					else {
+						this->toLower(data);
+
+						// (this->search(data)) { out << data; }
+						out << this->findNearestWord(data);
+					}
+					data.clear();
+				}
+				if (!file.eof()) out << c;
+			}
+			else {
+				data.push_back(c);
+			}
+		}
+	}
+	file.close();
+	out.close();
 }
 
 template<typename T>

@@ -129,6 +129,19 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
 			}
 		}
+		else if (values[0] == "fixfile") {
+			CHECK_LOAD();
+			std::ifstream in(values[1]);
+			if (!in.good()) { std::cout << "File is corrupted! Please try again!" << std::endl; }
+			else {
+				std::cout << "Fixing..." << std::endl;
+				clock_t start = clock();
+				arr->fixWordsInFile(in);
+				clock_t end = clock();
+				std::cout << "File has succesfully been fixed in " <<
+					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
+			}
+		}
 		else if (values[0] == "push") {
 			CHECK_LOAD();
 			arr->pushSorted(values[1]);
