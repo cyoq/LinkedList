@@ -62,9 +62,15 @@ void LinkedList<T>::clear() {
 template<typename T>
 void LinkedList<T>::swap(node<T> * &a, node<T> * &b) {
 
-	T temp = a->data;
+	node<T> *p1 = a, *p2 = b, *p3 = b->next;
+
+	a = p2;
+	a->next = p1;
+	a->next->next = p3;
+
+	/*T temp = a->data;
 	a->data = b->data;
-	b->data = temp;
+	b->data = temp;*/
 
 	//node<T> *prev = this->head;
 
@@ -102,6 +108,11 @@ bool LinkedList<std::string>::containsNumber(const std::string &data) {
 	return (data.find_first_of("0123456789") != std::string::npos);
 }
 
+template<>
+bool LinkedList<std::string>::containsSymbols(const std::string & data) {
+	return (data.find_first_of("!@#$;.,^&*()-_=+/:<>~`{}[]") != std::string::npos);
+}
+
 template<typename T>
 void LinkedList<T>::sort() {
 
@@ -128,7 +139,6 @@ void LinkedList<std::string>::sort() {
 		}
 	}*/
 	
-	node<std::string> *prev = NULL;
 
 	bool swapped = true;
 	while (swapped) {
@@ -206,8 +216,6 @@ int LinkedList<T>::levDistance(const std::string & s1, const std::string & s2) {
 	return result;
 }
 
-template<typename T>
-T LinkedList<T>::findNearestWord(const T & data) { return data; }
 
 template<>
 std::string LinkedList<std::string>::findNearestWord(const std::string & data) {
@@ -359,11 +367,11 @@ void LinkedList<std::string>::fixWordsInFile(std::ifstream &file) {
 			file.get(c);
 			if (c == '\t' || c == '\n' || c == ' ' || file.eof()) {
 				if (data != "") {
-					if (this->containsNumber(data)) { out << data; }
+					if (this->containsNumber(data) || this->containsSymbols(data)) { out << data; }
 					else {
 						this->toLower(data);
 
-						// (this->search(data)) { out << data; }
+						//if(this->search(data)) { out << data; }
 						out << this->findNearestWord(data);
 					}
 					data.clear();

@@ -65,5 +65,6 @@ private:
 	void toLower(std::string &data);
 	void swap(node<T> * &a, node<T> * &b);
 	bool containsNumber(const std::string &data);
+	bool containsSymbols(const std::string &data);
 };
 
