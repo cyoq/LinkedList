@@ -1,12 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-#include <fstream>
+#include "pch.h"
+#include "dictionary.h"
 #include <vector>
-#include <memory>
-#include <time.h>
-#include "LinkedList.h"
+#include <algorithm>
+
 
 #define CHECK_LOAD() \
 	if (!loaded) { std::cout << "Please load the file with the data before acting!" << std::endl; continue; }
@@ -32,7 +30,7 @@ size_t split(const std::string &txt, std::vector<std::string> &strs, char ch)
 }
 
 
-void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
+void mainMenu(Dictionary &dict) {
 	std::string str;
 	std::vector<std::string> values;
 	bool flag = true;
@@ -53,29 +51,33 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 		}
 		else if (values[0] == "size") {
 			CHECK_LOAD();
-			std::cout << "Size of dictionary is: " << arr->getSize() << std::endl;
+			std::cout << "Size of dictionary is: " << dict.list.getSize() << std::endl;
 		}
 		else if (values[0] == "show") {
 			CHECK_LOAD();
-			arr->show();
+			dict.show();
+		}
+		else if (values[0] == "showtail") {
+			CHECK_LOAD();
+			dict.list.showTail();
 		}
 		else if (values[0] == "clear") {
 			CHECK_LOAD();
 			std::cout << "Clearing the list!" << std::endl;
-			arr->clear();
+			dict.list.clear();
 			loaded = false;
 		}
 		else if (values[0] == "sort") {
 			CHECK_LOAD();
 			clock_t start = clock();
-			arr->sort();
+			dict.list.sort();
 			clock_t end = clock();
 			std::cout << "List has succesfully been sorted in " <<
 				(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
 		}
 		else if (values[0] == "sorted" || values[0] == "s?") {
 			CHECK_LOAD();
-			std::cout << "List is sorted: " << (arr->isSorted() ? "true" : "false") << std::endl;
+			std::cout << "List is sorted: " << (dict.list.isSorted() ? "true" : "false") << std::endl;
 		}
 		else if (values[0] == "sortload") {
 			std::ifstream file(values[1]);
@@ -83,20 +85,20 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 			else {
 				std::cout << "Opening..." << std::endl;
 				clock_t start = clock();
-				arr->loadFromFileSorted(file);
+				dict.loadFromFileSorted(file);
 				clock_t end = clock();
 				std::cout << "File has succesfully been read in " << 
 					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
 				loaded = true;
 			}
 		}
-		else if (values[0] == "sortload1") {
+		else if (values[0] == "load") {
 			std::ifstream file(values[1]);
 			if (!file.good()) { std::cout << "File is corrupted! Please try again!" << std::endl; }
 			else {
 				std::cout << "Opening..." << std::endl;
 				clock_t start = clock();
-				arr->loadFromFile(file);
+				dict.loadFromFile(file);
 				clock_t end = clock();
 				std::cout << "File has succesfully been read in " <<
 					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
@@ -109,7 +111,7 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 			else {
 				std::cout << "Opening..." << std::endl;
 				clock_t start = clock();
-				arr->loadFromFileRaw(file);
+				dict.loadFromFileRaw(file);
 				clock_t end = clock();
 				std::cout << "File has succesfully been read in " <<
 					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
@@ -123,7 +125,7 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 			else {
 				std::cout << "Saving..." << std::endl;
 				clock_t start = clock();
-				arr->saveToFile(out);
+				dict.saveToFile(out);
 				clock_t end = clock();
 				std::cout << "File has succesfully been saved in " <<
 					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
@@ -136,7 +138,7 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 			else {
 				std::cout << "Fixing..." << std::endl;
 				clock_t start = clock();
-				arr->fixWordsInFile(in);
+				dict.fixWordsInFile(in);
 				clock_t end = clock();
 				std::cout << "File has succesfully been fixed in " <<
 					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
@@ -144,13 +146,13 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 		}
 		else if (values[0] == "push") {
 			CHECK_LOAD();
-			arr->pushSorted(values[1]);
+			dict.list.pushSorted(values[1]);
 			std::cout << "Value has been pushed succesfully!" << std::endl;
 		}
 		else if (values[0] == "fix") {
 			CHECK_LOAD();
 			clock_t start = clock();
-			std::string result = arr->findNearestWord(values[1]);
+			std::string result = dict.findNearestWord(values[1]);
 			clock_t end = clock();
 			std::cout << "Did you mean: " << result << std::endl;
 			std::cout << "Corrected word has succesfully been found in " <<
@@ -159,13 +161,20 @@ void mainMenu(std::unique_ptr<LinkedList<std::string>> &arr) {
 		}
 		else if (values[0] == "find" || values[0] == "search") {
 			CHECK_LOAD();
-			if (arr->search(values[1])) {
+			clock_t start = clock();
+			bool result = dict.search(values[1]);
+			clock_t end = clock();
+			if (result) {
 				std::cout << "Value " << "\"" << values[1] << "\" " <<
 					"is found in the dictionary!" << std::endl;
+				std::cout << "Word has succesfully been found in " <<
+					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
 			}
 			else {
 				std::cout << "Value " << "\"" << values[1] << "\" " <<
 					"cannot be found in the dictionary!" << std::endl;
+				std::cout << "Word has not been found in " <<
+					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;
 			}
 		}
 		else {
