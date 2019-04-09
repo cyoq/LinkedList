@@ -4,30 +4,31 @@
 #include "dictionary.h"
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 
 #define CHECK_LOAD() \
 	if (!loaded) { std::cout << "Please load the file with the data before acting!" << std::endl; continue; }
 
-size_t split(const std::string &txt, std::vector<std::string> &strs, char ch)
-{
-	size_t pos = txt.find(ch);
-	size_t initialPos = 0;
-	strs.clear();
-
-	// Decompose statement
-	while (pos != std::string::npos) {
-		strs.push_back(txt.substr(initialPos, pos - initialPos));
-		initialPos = pos + 1;
-
-		pos = txt.find(ch, initialPos);
-	}
-
-	// Add the last one
-	strs.push_back(txt.substr(initialPos, std::min(pos, txt.size()) - initialPos + 1));
-
-	return strs.size();
-}
+//size_t split(const std::string &txt, std::vector<std::string> &strs, char ch)
+//{
+//	size_t pos = txt.find(ch);
+//	size_t initialPos = 0;
+//	strs.clear();
+//
+//	// Decompose statement
+//	while (pos != std::string::npos) {
+//		strs.push_back(txt.substr(initialPos, pos - initialPos));
+//		initialPos = pos + 1;
+//
+//		pos = txt.find(ch, initialPos);
+//	}
+//
+//	// Add the last one
+//	strs.push_back(txt.substr(initialPos, std::min(pos, txt.size()) - initialPos + 1));
+//
+//	return strs.size();
+//}
 
 
 void mainMenu(Dictionary &dict) {
@@ -40,9 +41,19 @@ void mainMenu(Dictionary &dict) {
 
 		std::cout << ">> ";
 
+		values.clear();
 
 		std::getline(std::cin, str);
-		split(str, values, ' ');
+		//split(str, values, ' ');
+
+		std::stringstream str_strm(str);
+		std::string tmp;
+		char delim = ' '; 
+
+		while (std::getline(str_strm, tmp, delim)) {
+			values.push_back(tmp);
+		}
+
 		if (values[0] == "quit" || values[0] == "q") {
 			flag = false;
 		}
@@ -134,11 +145,12 @@ void mainMenu(Dictionary &dict) {
 		else if (values[0] == "fixfile") {
 			CHECK_LOAD();
 			std::ifstream in(values[1]);
+			std::ofstream out("fixed.txt");
 			if (!in.good()) { std::cout << "File is corrupted! Please try again!" << std::endl; }
 			else {
 				std::cout << "Fixing..." << std::endl;
 				clock_t start = clock();
-				dict.fixWordsInFile(in);
+				dict.fixWordsInFile(in, out);
 				clock_t end = clock();
 				std::cout << "File has succesfully been fixed in " <<
 					(double)(end - start) / CLOCKS_PER_SEC << " seconds!" << std::endl;

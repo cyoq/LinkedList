@@ -7,8 +7,9 @@
 class Dictionary {
 
 public:
-	Dictionary();
+	Dictionary(std::ifstream &file);
 	~Dictionary();
+	Dictionary(const Dictionary &d);
 	friend void mainMenu(Dictionary &dict);
 	void show();
 	bool search(const std::string &data);
@@ -16,7 +17,10 @@ public:
 	bool loadFromFile(std::ifstream &file);
 	bool loadFromFileRaw(std::ifstream &file);
 	bool loadFromFileSorted(std::ifstream &file);
-	void fixWordsInFile(std::ifstream &file);
+	void fixWordsInFile(std::ifstream &input, std::ofstream &output);
+	void pushValue(const std::string &data);
+	bool removeValue(const std::string &data);
+	std::string fixWordsInString(const std::string &data);
 	std::string findNearestWord(const std::string &data);
 	
 
