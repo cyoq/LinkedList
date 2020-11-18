@@ -2,7 +2,7 @@
 
 LinkedList class written in C++
 
-A project was created during the course in RTU Daugavpuls Affiliation.
+A project was created during the course of programming.
 
 The goal was to implement LinkedList and as additional task was to create a dictionary which can load words, sort them and correct mistakes using Levenshtein distance.
 
